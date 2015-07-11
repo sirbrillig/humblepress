@@ -2,7 +2,7 @@
 var wordPress = window.wordPressInterface;
 
 // Use Browserify to import the admin-ajax interface as a module.
-//var wordPress = require( 'wordpress-ajax' );
+//var wordPress = require( './wordpress-ajax' );
 
 // Use Browserify to import the REST API interface as a module.
 //var wordPress = require( 'wordpress-rest-api' );

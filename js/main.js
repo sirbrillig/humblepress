@@ -2,7 +2,7 @@
 var loader = humblePressLoader;
 
 // Use Browserify to import the loader as a module.
-//loader = require( 'loader' );
+//var loader = require( './loader' );
 
 window.onload = function() {
 	loader.addActivationButton();
