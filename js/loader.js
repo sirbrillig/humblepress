@@ -19,11 +19,20 @@ function createHumblePressAdminBarButton() {
 	return button;
 }
 
+function getDefaultHumblePressContent() {
+	if ( ! wordPress || ! wordPress.getDefaultContent ) {
+		console.error( 'HumblePress error: no WordPress interface available to get default content' );
+		return;
+	}
+	return wordPress.getDefaultContent();
+}
+
 function createHumblePressForm() {
 	var formArea = document.createElement( 'div' );
 	formArea.id = 'humblepress-form';
 	var textArea = document.createElement( 'textarea' );
 	textArea.id = 'humblepress-form-text';
+	textArea.value = getDefaultHumblePressContent();
 	formArea.appendChild( textArea );
 	var submitButton = document.createElement( 'button' );
 	submitButton.appendChild( document.createTextNode( 'Post it!' ) );
