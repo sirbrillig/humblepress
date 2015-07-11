@@ -25,6 +25,8 @@ class HumblePress {
 
 	public static function enqueue_javascript() {
 		// Enqueue the JavaScript file(s)
-		wp_enqueue_script( 'humblepress', plugins_url( 'js/main.js', __FILE__ ), array(), true );
+		wp_enqueue_script( 'humblepress-loader', plugins_url( 'js/loader.js', __FILE__ ), array(), true );
+		wp_enqueue_script( 'humblepress', plugins_url( 'js/main.js', __FILE__ ), array( 'humblepress-loader' ), true );
+		// wp_enqueue_script( 'humblepress', plugins_url( 'js/humblepress.js', __FILE__ ), array(), true );
 	}
 }
