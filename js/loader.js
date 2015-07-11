@@ -1,3 +1,12 @@
+// Import the module from the global namespace
+var wordPress = window.wordPressInterface;
+
+// Use Browserify to import the admin-ajax interface as a module.
+//var wordPress = require( 'wordpress-ajax' );
+
+// Use Browserify to import the REST API interface as a module.
+//var wordPress = require( 'wordpress-rest-api' );
+
 // Private functions
 function createHumblePressAdminBarButton() {
 	var button = document.createElement( 'li' );
@@ -14,11 +23,36 @@ function createHumblePressForm() {
 	var formArea = document.createElement( 'div' );
 	formArea.id = 'humblepress-form';
 	var textArea = document.createElement( 'textarea' );
+	textArea.id = 'humblepress-form-text';
 	formArea.appendChild( textArea );
 	var submitButton = document.createElement( 'button' );
 	submitButton.appendChild( document.createTextNode( 'Post it!' ) );
+	submitButton.addEventListener( 'click', function() {
+		submitHumblePressPost();
+	} );
 	formArea.appendChild( submitButton );
 	return formArea;
+}
+
+function removeHumblePressForm() {
+	var existingForm = document.querySelector( '#humblepress-form' );
+	if ( existingForm && existingForm.parentNode ) {
+		existingForm.parentNode.removeChild( existingForm );
+	}
+}
+
+function submitHumblePressPost() {
+	var textArea = document.querySelector( '#humblepress-form-text' );
+	if ( ! textArea ) {
+		console.error( 'HumblePress error: could not find text area' );
+		return;
+	}
+	if ( ! wordPress || ! wordPress.makeNewPost ) {
+		console.error( 'HumblePress error: no WordPress interface available to make post' );
+		return;
+	}
+	wordPress.makeNewPost( textArea.value );
+	removeHumblePressForm();
 }
 
 var humblePressLoader = {
@@ -38,7 +72,7 @@ var humblePressLoader = {
 	toggleForm: function() {
 		var existingForm = document.querySelector( '#humblepress-form' );
 		if ( existingForm ) {
-			return humblePressLoader.removeForm();
+			return removeHumblePressForm();
 		}
 		humblePressLoader.renderFormToPage();
 	},
@@ -51,15 +85,9 @@ var humblePressLoader = {
 		}
 		var form = createHumblePressForm();
 		body.insertBefore( form, body.firstChild );
-	},
-
-	removeForm: function() {
-		var existingForm = document.querySelector( '#humblepress-form' );
-		if ( existingForm && existingForm.parentNode ) {
-			existingForm.parentNode.removeChild( existingForm );
-		}
 	}
+
 };
 
-// Use Browserify to export the function.
+// Use Browserify to export the functions.
 //module.exports = humblePressLoader;
