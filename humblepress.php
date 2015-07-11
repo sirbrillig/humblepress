@@ -20,7 +20,7 @@ class HumblePress {
 	}
 
 	public static function should_enqueue() {
-		return true;
+		return current_user_can( 'publish_posts' );
 	}
 
 	public static function enqueue_javascript() {
