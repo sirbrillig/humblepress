@@ -31,12 +31,22 @@ function createHumblePressForm() {
 		submitHumblePressPost();
 	} );
 	formArea.appendChild( submitButton );
+	var cancelButton = document.createElement( 'button' );
+	cancelButton.appendChild( document.createTextNode( 'Cancel Post' ) );
+	cancelButton.addEventListener( 'click', function() {
+		removeHumblePressForm();
+	} );
+	formArea.appendChild( cancelButton );
 	return formArea;
 }
 
 function removeHumblePressForm() {
 	var existingForm = document.querySelector( '#humblepress-form' );
 	if ( existingForm && existingForm.parentNode ) {
+		var textArea = document.querySelector( '#humblepress-form-text' );
+		if ( textArea ) {
+			textArea.value = '';
+		}
 		existingForm.parentNode.removeChild( existingForm );
 	}
 }
