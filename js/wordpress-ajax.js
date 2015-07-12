@@ -33,6 +33,7 @@ var wordPressInterface = {
 		if ( window.humblePressBootstrap && window.humblePressBootstrap.defaultContent ) {
 			return window.humblePressBootstrap.defaultContent;
 		}
+		return '';
 	}
 };
 
