@@ -3,6 +3,8 @@
   z-index: 10000;
   width: 100%;
   display: block;
+  position: absolute;
+  background-color: #e2e2e2;
 }
 
 #humblepress-notice {
@@ -13,6 +15,10 @@
 #humblepress-form textarea {
   width: 100%;
   display: block;
+}
+
+#humblepress-form textarea {
+  background-color: #fff;
 }
 
 #humblepress-notice button,
