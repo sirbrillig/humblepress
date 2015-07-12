@@ -13,7 +13,7 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 add_action( 'wp_enqueue_scripts', array( 'HumblePress', 'init' ) );
 
 // Set up AJAX new post action
-add_action( 'wp_ajax_new_humblepress_post', array( 'HumblePress', 'handle_new_post' ) );
+add_action( 'wp_ajax_new_humblepress_post', array( 'HumblePress', 'ajax_handle_new_post' ) );
 
 class HumblePress {
 	public static function init() {
@@ -44,14 +44,29 @@ class HumblePress {
 		) );
 	}
 
-	public static function handle_new_post() {
+	public static function ajax_handle_new_post() {
 		if ( ! isset( $_POST['postContents'] ) || empty( $_POST['postContents'] ) ) {
-			echo 'Error while making post';
-			wp_die();
+			http_response_code( 400 );
+			wp_die( 'HumblePress error: post contents not found', 400 );
+		}
+		if ( ! current_user_can( 'publish_posts' ) ) {
+			http_response_code( 400 );
+			wp_die( 'HumblePress error: insufficient permissions', 400 );
 		}
 		$post_content = $_POST['postContents'];
-		// TODO
-		echo 'Post complete.';
-		wp_die();
+		$new_post_id = wp_insert_post( self::create_new_post_with_content( $post_content ) );
+		if ( ! $new_post_id ) {
+			http_response_code( 400 );
+			wp_die( 'HumblePress error: could not create post', 400 );
+		}
+		wp_die( 'Post complete', 200 );
+	}
+
+	public static function create_new_post_with_content( $post_content ) {
+		$post_content = wp_strip_all_tags( $post_content );
+		return array(
+			'post_content' => $post_content,
+			'post_status' => 'publish'
+		);
 	}
 }
