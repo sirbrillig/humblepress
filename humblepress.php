@@ -12,6 +12,9 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 // Start the plugin
 add_action( 'wp_enqueue_scripts', array( 'HumblePress', 'init' ) );
 
+// Set up AJAX new post action
+add_action( 'wp_ajax_new_humblepress_post', array( 'HumblePress', 'handle_new_post' ) );
+
 class HumblePress {
 	public static function init() {
 		if ( self::should_enqueue() ) {
@@ -36,7 +39,19 @@ class HumblePress {
 			return;
 		}
 		wp_localize_script( 'humblepress', 'humblePressBootstrap', array(
+			'ajaxUrl' => admin_url( 'admin-ajax.php', 'relative' ),
 			'defaultContent' => $user->display_name. " says: "
 		) );
+	}
+
+	public static function handle_new_post() {
+		if ( ! isset( $_POST['postContents'] ) || empty( $_POST['postContents'] ) ) {
+			echo 'Error while making post';
+			wp_die();
+		}
+		$post_content = $_POST['postContents'];
+		// TODO
+		echo 'Post complete.';
+		wp_die();
 	}
 }

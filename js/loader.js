@@ -60,6 +60,10 @@ function removeHumblePressForm() {
 	}
 }
 
+function notifyHumblePressPostComplete( response ) {
+	console.log( 'Post complete. Response:', response );
+}
+
 function submitHumblePressPost() {
 	var textArea = document.querySelector( '#humblepress-form-text' );
 	if ( ! textArea ) {
@@ -70,7 +74,7 @@ function submitHumblePressPost() {
 		console.error( 'HumblePress error: no WordPress interface available to make post' );
 		return;
 	}
-	wordPress.makeNewPost( textArea.value );
+	wordPress.makeNewPost( textArea.value, notifyHumblePressPostComplete );
 	removeHumblePressForm();
 }
 
