@@ -8,6 +8,8 @@ This plugin adds a button to the logged-in admin bar which activates a small new
 
 The plugin is written almost entirely in JavaScript as a demonstration of using JavaScript in a WordPress plugin. There are several crucial lines of the plugin's code commented-out so that you can see how the different pieces of the plugin fit together.
 
+As you follow the steps below, look through the code for comments matching each of the steps. Commenting or uncommenting those lines will add some functionality to the plugin and bring you to the next step. For example, on Step 2, look for lines marked `Tutorial Step 2`.
+
 # Step 1: Installation
 
 To install this plugin, just drop it into the `wp-content/plugins` directory of a WordPress install. Then go into the Plugins page of wp-admin and click 'Activate' next to The HumblePress plugin.
@@ -38,7 +40,7 @@ Actually we should use another program, a "task runner", to run our build tool f
 
 We're going to use a task runner called [Grunt](http://gruntjs.com/). I have a [Gruntfile already set up in the repository](https://github.com/sirbrillig/humblepress/blob/master/Gruntfile.js) that contains all the instructions for telling Grunt how to run Browserify.
 
-Oh, but that would be too easy. How do we get Browserify and Grunt installed? Luckily, pretty much everyone has a program called "make" installed on their computer, so I've also included a [Makefile](https://github.com/sirbrillig/humblepress/blob/master/Makefile) which will install everything and kick off Grunt when you type `make run`.
+Oh, but that would be too easy. How do we get Browserify and Grunt installed? Luckily, pretty much everyone has a program called "make" installed on their computer, so I've also included a [Makefile](https://github.com/sirbrillig/humblepress/blob/master/Makefile) which will install everything and kick off Grunt when you type `make run`. Everything you need should be installed automatically, and then Grunt will sit there watching for any changes to your files, running Browserify on them if anything changes.
 
 Technically, "make" is also a task runner, so we could just use that instead of Grunt, but in this case Grunt is easier to configure and use, so we use these tools together.
 
