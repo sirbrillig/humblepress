@@ -56,10 +56,15 @@ class HumblePress {
 		$post_content = $_POST['postContents'];
 		$new_post_id = wp_insert_post( self::create_new_post_with_content( $post_content ) );
 		if ( ! $new_post_id ) {
-			http_response_code( 400 );
-			wp_die( 'HumblePress error: could not create post', 400 );
+			http_response_code( 500 );
+			wp_die( 'HumblePress error: could not create post', 500 );
 		}
-		wp_die( 'Post complete', 200 );
+		$permalink = get_permalink( $new_post_id );
+		if ( ! $permalink ) {
+			http_response_code( 500 );
+			wp_die( 'HumblePress error: error while creating post', 500 );
+		}
+		wp_send_json_success( array( 'post_id' => $new_post_id, 'permalink' => $permalink ) );
 	}
 
 	public static function create_new_post_with_content( $post_content ) {
