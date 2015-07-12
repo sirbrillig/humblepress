@@ -32,11 +32,13 @@ var humblePressPrivate = {
 	createNotice: function( text, link ) {
 		var noticeArea = document.createElement( 'div' );
 		noticeArea.id = 'humblepress-notice';
-		noticeArea.appendChild( document.createTextNode( text ) );
+		var noticeText = document.createElement( 'p' );
+		noticeText.appendChild( document.createTextNode( text ) );
 		var linkNode = document.createElement( 'a' );
 		linkNode.appendChild( document.createTextNode( link ) );
 		linkNode.href = link;
-		noticeArea.appendChild( linkNode );
+		noticeText.appendChild( linkNode );
+		noticeArea.appendChild( noticeText );
 		var cancelButton = document.createElement( 'button' );
 		cancelButton.appendChild( document.createTextNode( 'Close' ) );
 		cancelButton.addEventListener( 'click', function() {
@@ -89,7 +91,7 @@ var humblePressPrivate = {
 			console.error( 'HumblePress error: something went wrong with making the post' );
 			return;
 		}
-		var notice = 'I made a new post for you! See it here: ';
+		var notice = 'HumblePress made a new post for you! See it here: ';
 		humblePressPrivate.renderNoticeToPage( notice, responseData.data.permalink );
 	},
 

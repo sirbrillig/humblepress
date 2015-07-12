@@ -1,0 +1,22 @@
+#humblepress-notice,
+#humblepress-form {
+  z-index: 10000;
+  width: 100%;
+  display: block;
+}
+
+#humblepress-notice {
+  background-color: #fcff98;
+}
+
+#humblepress-form p,
+#humblepress-form textarea {
+  width: 100%;
+  display: block;
+}
+
+#humblepress-notice button,
+#humblepress-form button {
+  display: inline-block;
+  margin-right: 2px;
+}
