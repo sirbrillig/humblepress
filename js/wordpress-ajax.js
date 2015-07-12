@@ -26,7 +26,6 @@ var wordPressInterface = {
 			console.error( 'HumblePress error: ajax request encountered an error', request );
 		};
 		request.open( 'POST', window.humblePressBootstrap.ajaxUrl, true );
-		//request.setRequestHeader( 'Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8' );
 		request.send( encodedAjaxData );
 	},
 
@@ -37,5 +36,5 @@ var wordPressInterface = {
 	}
 };
 
-// Use Browserify to export these functions
+// Tutorial Step 3: Uncomment to use Browserify to export these functions
 //module.exports = wordPressInterface;

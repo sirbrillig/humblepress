@@ -1,11 +1,10 @@
+var wordPress;
+
 // Import the module from the global namespace
-var wordPress = window.wordPressInterface;
+wordPress = window.wordPressInterface;
 
-// Use Browserify to import the admin-ajax interface as a module.
-//var wordPress = require( './wordpress-ajax' );
-
-// Use Browserify to import the REST API interface as a module.
-//var wordPress = require( 'wordpress-rest-api' );
+// Tutorial Step 3: Uncomment to use use Browserify to import the admin-ajax interface as a module.
+//wordPress = require( './wordpress-ajax' );
 
 // Private functions
 var humblePressPrivate = {
@@ -157,5 +156,5 @@ var humblePressLoader = {
 
 };
 
-// Use Browserify to export the functions.
+// Tutorial Step 3: Uncomment to use Browserify to export these functions
 //module.exports = humblePressLoader;

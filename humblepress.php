@@ -13,12 +13,14 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 add_action( 'wp_enqueue_scripts', array( 'HumblePress', 'init' ) );
 
 // Set up AJAX new post action
-add_action( 'wp_ajax_new_humblepress_post', array( 'HumblePress', 'ajax_handle_new_post' ) );
+// Tutorial Step 5: Uncomment to handle AJAX posts
+// add_action( 'wp_ajax_new_humblepress_post', array( 'HumblePress', 'ajax_handle_new_post' ) );
 
 class HumblePress {
 	public static function init() {
 		if ( self::should_enqueue() ) {
-			self::enqueue_javascript();
+			// Tutorial Step 2: Uncomment to enqueue the JavaScript
+			// self::enqueue_javascript();
 		}
 	}
 
@@ -30,15 +32,21 @@ class HumblePress {
 		// Enqueue the CSS
 		wp_enqueue_style( 'humblepress', plugins_url( 'css/humblepress.css', __FILE__ ) );
 
-		// Enqueue all the JavaScript file
+		// Enqueue all the JavaScript files
+		// Tutorial Step 3: Comment these to use only the "compiled" file.
 		wp_enqueue_script( 'humblepress-ajax', plugins_url( 'js/wordpress-ajax.js', __FILE__ ), array(), true );
 		wp_enqueue_script( 'humblepress-loader', plugins_url( 'js/loader.js', __FILE__ ), array( 'humblepress-ajax' ), true );
 		wp_enqueue_script( 'humblepress', plugins_url( 'js/main.js', __FILE__ ), array( 'humblepress-loader' ), true );
 
-		// Enqueue the single "compiled" JavaScript file
+		// Tutorial Step 3: Uncomment to enqueue the single "compiled" JavaScript file
 		// wp_enqueue_script( 'humblepress', plugins_url( 'js/humblepress.js', __FILE__ ), array(), true );
 
 		// Bootstrap data for the JavaScript
+		// Tutorial Step 4: Uncomment to bootstrap data for the JavaScript
+		// self::bootstrap_data();
+	}
+
+	public static function bootstrap_data() {
 		$user = wp_get_current_user();
 		if ( ! $user instanceof WP_User ) {
 			return;
