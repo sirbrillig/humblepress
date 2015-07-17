@@ -55,7 +55,7 @@ class HumblePress {
 			'ajaxUrl' => admin_url( 'admin-ajax.php', 'relative' ),
 			'apiUrl' => ( function_exists( 'get_json_url' ) ? esc_url_raw( get_json_url() ) : '' ),
 			'nonce' => wp_create_nonce( 'wp_json' ),
-			'defaultContent' => $user->display_name. " says: "
+			'userName' => $user->display_name
 		) );
 	}
 

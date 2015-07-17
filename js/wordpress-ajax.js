@@ -30,8 +30,8 @@ var wordPressInterface = {
 	},
 
 	getDefaultContent: function() {
-		if ( window.humblePressBootstrap && window.humblePressBootstrap.defaultContent ) {
-			return window.humblePressBootstrap.defaultContent;
+		if ( window.humblePressBootstrap && window.humblePressBootstrap.userName ) {
+			return window.humblePressBootstrap.userName + ' says: ';
 		}
 		return '';
 	}

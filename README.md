@@ -58,7 +58,7 @@ Now we're going to have the plugin automatically populate the form field with th
 
 When we enqueue our JavaScript, we can bootstrap whatever data we like from the PHP using the confusingly-named `wp_localize_script` (the function was originally intended to be used for translations).
 
-We grab the user name, use`wp_localize_script` to add that data to the variable `humblePressBootstrap.defaultContent`, and...
+We grab the user name, use`wp_localize_script` to add that data to the variable `humblePressBootstrap.userName`, and...
 
 We can access that data directly from our JavaScript. The code is already set up to look for that variable, so it should display the text inside our form when it gets loaded.
 
