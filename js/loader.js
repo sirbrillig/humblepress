@@ -13,6 +13,9 @@ wordPress = window.wordPressInterface;
 var humblePressPrivate = {
 
 	createAdminBarButton: function() {
+		if ( wordPress.fetchUserNameFromAPI ) {
+			wordPress.fetchUserNameFromAPI();
+		}
 		var button = document.createElement( 'li' );
 		button.className = 'wp-admin-bar-humblepress';
 		var buttonLink = document.createElement( 'a' );

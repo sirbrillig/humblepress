@@ -1,10 +1,20 @@
+var humblePressUserName = '';
+
 var wordPressInterface = {
+	getConnectionData: function() {
+		// Tutorial Step 7: Uncomment to use the API to replace the bootstrapped data.
+		//return wordPressInterface.getApiData();
+
+		return window.humblePressBootstrap;
+	},
+
 	makeNewPost: function( postContents, callback ) {
-		if ( ! window.humblePressBootstrap || ! window.humblePressBootstrap.apiUrl ) {
+		var connectionData = wordPressInterface.getConnectionData();
+		if ( ! connectionData || ! connectionData.apiUrl ) {
 			console.error( 'HumblePress error: could not get API url' );
 			return;
 		}
-		if ( ! window.humblePressBootstrap.nonce ) {
+		if ( ! connectionData.nonce ) {
 			console.error( 'HumblePress error: could not get required API data' );
 			return;
 		}
@@ -26,19 +36,51 @@ var wordPressInterface = {
 		request.onerror = function() {
 			console.error( 'HumblePress error: API request encountered an error', request );
 		};
-		request.open( 'POST', window.humblePressBootstrap.apiUrl + '/posts', true );
-		request.setRequestHeader( 'X-WP-Nonce', window.humblePressBootstrap.nonce );
+		request.open( 'POST', connectionData.apiUrl + '/posts', true );
+		request.setRequestHeader( 'X-WP-Nonce', connectionData.nonce );
 		request.send( JSON.stringify( apiData ) );
 	},
 
 	getDefaultContent: function() {
-		if ( window.humblePressBootstrap && window.humblePressBootstrap.userName ) {
-			return window.humblePressBootstrap.userName + ' says: ';
+		var connectionData = wordPressInterface.getConnectionData();
+		if ( connectionData && connectionData.userName ) {
+			return connectionData.userName + ' says: ';
 		}
 		return '';
+	},
+
+	fetchUserNameFromAPI: function() {
+		var connectionData = wordPressInterface.getConnectionData();
+		var request = new XMLHttpRequest();
+		request.onload = function() {
+			if ( request.status >= 200 && request.status < 400 ) {
+				var responseData = JSON.parse( request.responseText );
+				humblePressUserName = responseData.username;
+			} else {
+				console.error( 'HumblePress error: API request to get userName failed', request );
+			}
+		};
+		request.onerror = function() {
+			console.error( 'HumblePress error: API request to get userName encountered an error', request );
+		};
+		request.open( 'GET', connectionData.apiUrl + '/users/me', true );
+		request.setRequestHeader( 'X-WP-Nonce', connectionData.nonce );
+		request.send();
+	},
+
+	getApiData: function() {
+		// If we used OAuth here, we could avoid needing the bootstrapped data entirely.
+		if ( ! window.humblePressBootstrap.apiUrl || ! window.humblePressBootstrap.nonce ) {
+			console.error( 'HumblePress error: could not get required API data' );
+			return {};
+		}
+		return {
+			apiUrl: window.humblePressBootstrap.apiUrl,
+			userName: humblePressUserName,
+			nonce: window.humblePressBootstrap.nonce
+		};
 	}
 };
 
-// Tutorial Step 3: Uncomment to use Browserify to export these functions
-//module.exports = wordPressInterface;
+module.exports = wordPressInterface;
 

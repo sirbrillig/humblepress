@@ -76,6 +76,10 @@ That's a fully-functional plugin right there, but we can do something even coole
 
 If it's installed, we can switch out the methods of our plugin to remove the complicated call to `admin-ajax.php` and the PHP action handler and just make a request to the API instead.
 
-In fact, if we did some more work (not yet written here) we could even replace the bootstrap code with another REST API request.
+# Step 7: Full REST API
+
+In fact, if we did some more work we could even replace the bootstrap code with another REST API request to get the user name.
+
+Once that's done, the only bootstrapped data we still have is the nonce that is used to authenticate our API requests. We can replace that too using OAuth, but that part of the REST API project is still in-progress so you'll have to imagine it for now.
 
 With both the form input and output being loaded via the REST API, there's no longer any connection between our JavaScript app and WordPress except for loading the JavaScript file in the first place. This means that our app could operate outside of WordPress, as a desktop app for example, or many other places.
