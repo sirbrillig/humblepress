@@ -6,6 +6,9 @@ wordPress = window.wordPressInterface;
 // Tutorial Step 3: Uncomment to use use Browserify to import the admin-ajax interface as a module.
 //wordPress = require( './wordpress-ajax' );
 
+// Tutorial Step 6: Uncomment to use REST API to make the post.
+//wordPress = require( './wordpress-rest' );
+
 // Private functions
 var humblePressPrivate = {
 
@@ -86,12 +89,23 @@ var humblePressPrivate = {
 
 	notifyPostComplete: function( response ) {
 		var responseData = JSON.parse( response );
-		if ( ! responseData.success ) {
+		if ( ! responseData.success && ! responseData.ID ) {
 			console.error( 'HumblePress error: something went wrong with making the post' );
 			return;
 		}
 		var notice = 'HumblePress made a new post for you! See it here: ';
-		humblePressPrivate.renderNoticeToPage( notice, responseData.data.permalink );
+		var link = '';
+		if ( responseData.link ) {
+			link = responseData.link;
+		}
+		if ( responseData.data && responseData.data.permalink ) {
+			link = responseData.data.permalink;
+		}
+		if ( ! link ) {
+			console.error( 'HumblePress error: no link found' );
+			return;
+		}
+		humblePressPrivate.renderNoticeToPage( notice, link );
 	},
 
 	renderNoticeToPage: function( text, link ) {

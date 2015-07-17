@@ -70,3 +70,12 @@ When you send a request to `admin-ajax.php`, you specify an `action` to run. Bac
 
 Once that's hooked up, we can now press the "post" button, and pretty much instantly we get a new post!
 
+# Step 6: REST API
+
+That's a fully-functional plugin right there, but we can do something even cooler if your WordPress install has a REST API installed. The [REST API is a plugin](https://wordpress.org/plugins/json-rest-api/) right now, but soon it will be part of WordPress core.
+
+If it's installed, we can switch out the methods of our plugin to remove the complicated call to `admin-ajax.php` and the PHP action handler and just make a request to the API instead.
+
+In fact, if we did some more work (not yet written here) we could even replace the bootstrap code with another REST API request.
+
+With both the form input and output being loaded via the REST API, there's no longer any connection between our JavaScript app and WordPress except for loading the JavaScript file in the first place. This means that our app could operate outside of WordPress, as a desktop app for example, or many other places.
