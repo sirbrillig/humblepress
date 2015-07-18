@@ -41,7 +41,7 @@ add_action( 'wp_enqueue_scripts', array( 'HumblePress', 'init' ) );
 
 To use `wp_enqueue_script()`, you need to specify four things: a name, the path to the JavaScript file, any dependencies you'll need, and a true/false value for whether to print the script on the bottom or the top of the page, respectively. Unless you have a very compelling reason to enqueue at the top of the page, good practice is to always use `true` here.
 
-If you look further down in the PHP file, you'll see the code that enqueues our JavaScript.
+If you look further down in the PHP file, you'll see the code that enqueues our JavaScript files. There's four calls to the `wp_enqueue_script` function.
 
 **humblepress.php:**
 
@@ -61,7 +61,8 @@ class HumblePress {
 
 	// Enqueue all the JavaScript files
 	public static function enqueue_javascript() {
-		wp_enqueue_script( 'humblepress-ajax', plugins_url( 'js/wordpress-ajax.js', __FILE__ ), array(), true );
+		wp_enqueue_script( 'humblepress-errors', plugins_url( 'js/errors.js', __FILE__ ), array(), true );
+		wp_enqueue_script( 'humblepress-ajax', plugins_url( 'js/wordpress-ajax.js', __FILE__ ), array( 'humblepress-errors' ), true );
 		wp_enqueue_script( 'humblepress-loader', plugins_url( 'js/loader.js', __FILE__ ), array( 'humblepress-ajax' ), true );
 		wp_enqueue_script( 'humblepress', plugins_url( 'js/main.js', __FILE__ ), array( 'humblepress-loader' ), true );
 	}
@@ -69,11 +70,15 @@ class HumblePress {
 }
 ```
 
-Our plugin is going to render a form onto the page when you click the activation button. In the `js` folder of the project I have put a simple JavaScript file called `js/main.js` that does this. We will have to enqueue that.
+What are those four files?
 
-Loading a form is a pretty big task, though, so I've stuck all that logic into a separate file called `js/loader.js`. In order to get that loaded too, we'll need to also enqueue it before `main.js`, and then specify it as a dependency.
+1. Our plugin is going to render a form onto the page when you click the activation button. In the `js` folder of the project I have put a simple JavaScript file called `js/main.js` that does this. We will have to enqueue that.
 
-Our loader is going to need to do some communication with WordPress too, so we'll also enqueue a library called `js/wordpress-ajax.js` and make it a dependency too.
+2. Loading a form is a pretty big task, though, so I've stuck all that logic into a separate file called `js/loader.js`. In order to get that loaded too, we'll need to also enqueue it before `main.js`, and then specify it as a dependency.
+
+3. Our loader is going to need to do some communication with WordPress too, so we'll also enqueue a library called `js/wordpress-ajax.js` and make it a dependency too.
+
+4. All sorts of errors can appear when this plugin operates. In order to make it easier for you to see them, we added an error handling library called `js/errors.js`. That's the last file.
 
 # Step 3: JavaScript Build Tools
 
