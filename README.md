@@ -36,21 +36,13 @@ Instead, we can have a program automatically mash up all of our files into one f
 
 Browserify also implements the [CommonJS Module Pattern](http://addyosmani.com/resources/essentialjsdesignpatterns/book/#detailcommonjs) for each of your JavaScript files, so we're going to use the `require` function to join our files together, keeping everything out of the global namespace.
 
-Actually we should use another program, a "task runner", to run our build tool for us, because that way we can have Browserify always running while we code, and have it do other things for us too, like minify the source.
-
-We're going to use a task runner called [Grunt](http://gruntjs.com/). I have a [Gruntfile already set up in the repository](https://github.com/sirbrillig/humblepress/blob/master/Gruntfile.js) that contains all the instructions for telling Grunt how to run Browserify.
-
-Oh, but that would be too easy. How do we get Browserify and Grunt installed? Luckily, pretty much everyone has a program called "make" installed on their computer, so I've also included a [Makefile](https://github.com/sirbrillig/humblepress/blob/master/Makefile) which will install everything and kick off Grunt when you type `make run`. Everything you need should be installed automatically, and then Grunt will sit there watching for any changes to your files, running Browserify on them if anything changes.
-
-Technically, "make" is also a task runner, so we could just use that instead of Grunt, but in this case Grunt is easier to configure and use, so we use these tools together.
+So how do we get Browserify installed? Luckily, pretty much everyone with a Mac or Linux computer has a program called "make" installed on their computer, so I've also included a [Makefile](https://github.com/sirbrillig/humblepress/blob/master/Makefile) which will install everything when you type `make run`. Everything you need should be installed automatically (you will be notified otherwise), and then Browserify will "compile" all your JavaScript files into one.
 
 I know, that's a lot of tools, but this will all be worth it as we go. For your own projects, feel free to use as many or as few of these tools as you like. There's a lot of things to choose from.
 
 Browserify is going to create a single file, `humblepress.js`, which includes all the JavaScript files in our `js` folder. Now we can just enqueue that one file in our PHP code and...
 
 Our plugin loads a teeny-tiny bit faster! For a project with hundreds of JavaScript files, this difference could be significant.
-
-We can also ask Grunt to do other things for us, like run a CSS pre-processor (e.g.: [Sass](http://sass-lang.com/)), [translate ES6 code to ES5](https://babeljs.io/), run [unit tests](http://mochajs.org/), and a whole lot more.
 
 # Step 4: Bootstrapping Data
 
