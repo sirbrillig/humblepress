@@ -39,6 +39,6 @@ var humblePressErrors = {
 
 };
 
-if ( module ) {
+if ( typeof module !== 'undefined' ) {
 	module.exports = humblePressErrors;
 }

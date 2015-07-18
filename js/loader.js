@@ -5,7 +5,7 @@ wordPress = window.wordPressInterface;
 errorLib = window.humblePressErrors;
 
 // Use Browserify to import the admin-ajax interface as a module.
-if ( require ) {
+if ( typeof module !== 'undefined' ) {
 	wordPress = require( './wordpress-ajax' );
 	errorLib = require( './errors' );
 }
@@ -183,6 +183,6 @@ var humblePressLoader = {
 };
 
 // Use Browserify to export these functions
-if ( module ) {
+if ( typeof module !== 'undefined' ) {
 	module.exports = humblePressLoader;
 }

@@ -4,7 +4,7 @@ var loader;
 loader = window.humblePressLoader;
 
 // Use Browserify to import the loader as a module.
-if ( require ) {
+if ( typeof module !== 'undefined' ) {
 	loader = require( './loader' );
 }
 

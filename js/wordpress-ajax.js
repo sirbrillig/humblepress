@@ -1,7 +1,7 @@
 var errorLib = window.humblePressErrors;
 
 // Use Browserify to import the error lib as a module.
-if ( require ) {
+if ( typeof module !== 'undefined' ) {
 	errorLib = require( './errors' );
 }
 
@@ -45,6 +45,6 @@ var wordPressInterface = {
 };
 
 // Use Browserify to export these functions
-if ( module ) {
+if ( typeof module !== 'undefined' ) {
 	module.exports = wordPressInterface;
 }
