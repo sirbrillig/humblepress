@@ -35,7 +35,7 @@ class HumblePress {
 
 			// Bootstrap data for the JavaScript
 			// Tutorial Step 4: Uncomment to bootstrap data for the JavaScript
-			self::bootstrap_data();
+			// self::bootstrap_data();
 
 			// Enqueue some CSS for our plugin
 			wp_enqueue_style( 'humblepress', plugins_url( 'css/humblepress.css', __FILE__ ) );
@@ -44,7 +44,8 @@ class HumblePress {
 
 	// Enqueue all the JavaScript files
 	public static function enqueue_javascript() {
-		wp_enqueue_script( 'humblepress-ajax', plugins_url( 'js/wordpress-ajax.js', __FILE__ ), array(), true );
+		wp_enqueue_script( 'humblepress-errors', plugins_url( 'js/errors.js', __FILE__ ), array(), true );
+		wp_enqueue_script( 'humblepress-ajax', plugins_url( 'js/wordpress-ajax.js', __FILE__ ), array( 'humblepress-errors' ), true );
 		wp_enqueue_script( 'humblepress-loader', plugins_url( 'js/loader.js', __FILE__ ), array( 'humblepress-ajax' ), true );
 		wp_enqueue_script( 'humblepress', plugins_url( 'js/main.js', __FILE__ ), array( 'humblepress-loader' ), true );
 	}

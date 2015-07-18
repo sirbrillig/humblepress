@@ -1,15 +1,17 @@
-var wordPress;
+var wordPress, errorLib;
 
 // Import the module from the global namespace
 wordPress = window.wordPressInterface;
+errorLib = window.humblePressErrors;
 
 // Use Browserify to import the admin-ajax interface as a module.
 if ( require ) {
 	wordPress = require( './wordpress-ajax' );
+	errorLib = require( './errors' );
 }
 
 // Tutorial Step 6: Uncomment to use REST API to make the post.
-wordPress = require( './wordpress-rest' );
+//wordPress = require( './wordpress-rest' );
 
 // Private functions
 var humblePressPrivate = {
@@ -27,7 +29,7 @@ var humblePressPrivate = {
 
 	getDefaultContent: function() {
 		if ( ! wordPress || ! wordPress.getDefaultContent ) {
-			console.error( 'HumblePress error: no WordPress interface available to get default content' );
+			errorLib.error( 'HumblePress error: no WordPress interface available to get default content' );
 			return;
 		}
 		return wordPress.getDefaultContent();
@@ -38,10 +40,12 @@ var humblePressPrivate = {
 		noticeArea.id = 'humblepress-notice';
 		var noticeText = document.createElement( 'p' );
 		noticeText.appendChild( document.createTextNode( text ) );
-		var linkNode = document.createElement( 'a' );
-		linkNode.appendChild( document.createTextNode( linkText ) );
-		linkNode.href = link;
-		noticeText.appendChild( linkNode );
+		if ( link && linkText ) {
+			var linkNode = document.createElement( 'a' );
+			linkNode.appendChild( document.createTextNode( linkText ) );
+			linkNode.href = link;
+			noticeText.appendChild( linkNode );
+		}
 		noticeArea.appendChild( noticeText );
 		var cancelButton = document.createElement( 'button' );
 		cancelButton.appendChild( document.createTextNode( 'Close' ) );
@@ -92,7 +96,7 @@ var humblePressPrivate = {
 	notifyPostComplete: function( response ) {
 		var responseData = JSON.parse( response );
 		if ( ! responseData.success && ! responseData.ID ) {
-			console.error( 'HumblePress error: something went wrong with making the post' );
+			errorLib.error( 'HumblePress error: something went wrong with making the post' );
 			return;
 		}
 		var notice = 'HumblePress made a new post for you!';
@@ -105,7 +109,7 @@ var humblePressPrivate = {
 			link = responseData.data.permalink;
 		}
 		if ( ! link ) {
-			console.error( 'HumblePress error: no link found' );
+			errorLib.error( 'HumblePress error: no link found' );
 			return;
 		}
 		humblePressPrivate.renderNoticeToPage( notice, linkText, link );
@@ -115,7 +119,7 @@ var humblePressPrivate = {
 		humblePressPrivate.removeFormAndNotice();
 		var body = document.querySelector( 'body' );
 		if ( ! body ) {
-			console.error( 'HumblePress error: could not find page body' );
+			errorLib.error( 'HumblePress error: could not find page body' );
 			return;
 		}
 		var noticeArea = humblePressPrivate.createNotice( text, linkText, link );
@@ -125,11 +129,11 @@ var humblePressPrivate = {
 	submitPost: function() {
 		var textArea = document.querySelector( '#humblepress-form-text' );
 		if ( ! textArea ) {
-			console.error( 'HumblePress error: could not find text area' );
+			errorLib.error( 'HumblePress error: could not find text area' );
 			return;
 		}
 		if ( ! wordPress || ! wordPress.makeNewPost ) {
-			console.error( 'HumblePress error: no WordPress interface available to make post' );
+			errorLib.error( 'HumblePress error: no WordPress interface available to make post' );
 			return;
 		}
 		wordPress.makeNewPost( textArea.value, humblePressPrivate.notifyPostComplete );
@@ -142,12 +146,13 @@ var humblePressLoader = {
 	addActivationButton: function() {
 		var adminBar = document.querySelector( '#wp-admin-bar-root-default' );
 		if ( ! adminBar ) {
-			console.error( 'HumblePress error: could not find admin bar' );
+			errorLib.error( 'HumblePress error: could not find admin bar' );
 			return;
 		}
 		var button = humblePressPrivate.createAdminBarButton();
 		adminBar.appendChild( button );
 		button.addEventListener( 'click', function() {
+			errorLib.removeErrorNotice();
 			humblePressLoader.toggleForm();
 		} );
 
@@ -168,7 +173,7 @@ var humblePressLoader = {
 		humblePressPrivate.removeFormAndNotice();
 		var body = document.querySelector( 'body' );
 		if ( ! body ) {
-			console.error( 'HumblePress error: could not find page body' );
+			errorLib.error( 'HumblePress error: could not find page body' );
 			return;
 		}
 		var form = humblePressPrivate.createForm();

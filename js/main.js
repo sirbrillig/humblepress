@@ -8,6 +8,7 @@ if ( require ) {
 	loader = require( './loader' );
 }
 
+// Add the activation button to the page once the page is loaded.
 window.onload = function() {
 	loader.addActivationButton();
 };

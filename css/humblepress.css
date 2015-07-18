@@ -5,6 +5,7 @@
 }
 
 #humblepress-notice,
+#humblepress-error-notice,
 #humblepress-form {
   z-index: 10000;
   width: 100%;
@@ -13,10 +14,12 @@
   background-color: #e2e2e2;
 }
 
+#humblepress-error-notice,
 #humblepress-notice {
   background-color: #d8d8d8;
 }
 
+#humblepress-error-notice,
 #humblepress-notice p {
   padding: 8px;
 }
@@ -44,6 +47,7 @@
   background-color: #fff;
 }
 
+#humblepress-error-notice button,
 #humblepress-notice button,
 #humblepress-form button {
   display: inline-block;
