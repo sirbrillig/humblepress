@@ -7,12 +7,12 @@ npm:
 
 install:
 	@echo "Installing dependencies..."
-	$(NPM) install
+	@$(NPM) install
 
 compile:
 	@echo "Running Browserify on your files..."
-	$(BROWSERIFY) js/main.js -o js/humblepress.js
+	@$(BROWSERIFY) js/main.js -o js/humblepress.js
 	@echo "All done!"
 
-run: npm install compile
+build: npm install compile
 

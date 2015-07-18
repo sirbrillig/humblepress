@@ -37,5 +37,7 @@ var wordPressInterface = {
 	}
 };
 
-// Tutorial Step 3: Uncomment to use Browserify to export these functions
-//module.exports = wordPressInterface;
+// Use Browserify to export these functions
+if ( module ) {
+	module.exports = wordPressInterface;
+}

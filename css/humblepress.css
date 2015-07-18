@@ -1,3 +1,9 @@
+.wp-admin-bar-humblepress .ab-item::before {
+  content: '\f132';
+  font-family: 'dashicons';
+  margin-top: 4px;
+}
+
 #humblepress-notice,
 #humblepress-form {
   z-index: 10000;
@@ -8,7 +14,24 @@
 }
 
 #humblepress-notice {
-  background-color: #fcff98;
+  background-color: #d8d8d8;
+}
+
+#humblepress-notice p {
+  padding: 8px;
+}
+
+#humblepress-notice a {
+  display: block;
+  color: #009B08;
+}
+
+#humblepress-notice a::before {
+  content: '\f177';
+  font-family: 'dashicons';
+  padding-right: 6px;
+  color: #000;
+  float: left;
 }
 
 #humblepress-form p,

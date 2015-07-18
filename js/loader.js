@@ -3,19 +3,18 @@ var wordPress;
 // Import the module from the global namespace
 wordPress = window.wordPressInterface;
 
-// Tutorial Step 3: Uncomment to use use Browserify to import the admin-ajax interface as a module.
-//wordPress = require( './wordpress-ajax' );
+// Use Browserify to import the admin-ajax interface as a module.
+if ( require ) {
+	wordPress = require( './wordpress-ajax' );
+}
 
 // Tutorial Step 6: Uncomment to use REST API to make the post.
-//wordPress = require( './wordpress-rest' );
+wordPress = require( './wordpress-rest' );
 
 // Private functions
 var humblePressPrivate = {
 
 	createAdminBarButton: function() {
-		if ( wordPress.fetchUserNameFromAPI ) {
-			wordPress.fetchUserNameFromAPI();
-		}
 		var button = document.createElement( 'li' );
 		button.className = 'wp-admin-bar-humblepress';
 		var buttonLink = document.createElement( 'a' );
@@ -34,13 +33,13 @@ var humblePressPrivate = {
 		return wordPress.getDefaultContent();
 	},
 
-	createNotice: function( text, link ) {
+	createNotice: function( text, linkText, link ) {
 		var noticeArea = document.createElement( 'div' );
 		noticeArea.id = 'humblepress-notice';
 		var noticeText = document.createElement( 'p' );
 		noticeText.appendChild( document.createTextNode( text ) );
 		var linkNode = document.createElement( 'a' );
-		linkNode.appendChild( document.createTextNode( link ) );
+		linkNode.appendChild( document.createTextNode( linkText ) );
 		linkNode.href = link;
 		noticeText.appendChild( linkNode );
 		noticeArea.appendChild( noticeText );
@@ -96,7 +95,8 @@ var humblePressPrivate = {
 			console.error( 'HumblePress error: something went wrong with making the post' );
 			return;
 		}
-		var notice = 'HumblePress made a new post for you! See it here: ';
+		var notice = 'HumblePress made a new post for you!';
+		var linkText = 'View the Post';
 		var link = '';
 		if ( responseData.link ) {
 			link = responseData.link;
@@ -108,17 +108,17 @@ var humblePressPrivate = {
 			console.error( 'HumblePress error: no link found' );
 			return;
 		}
-		humblePressPrivate.renderNoticeToPage( notice, link );
+		humblePressPrivate.renderNoticeToPage( notice, linkText, link );
 	},
 
-	renderNoticeToPage: function( text, link ) {
+	renderNoticeToPage: function( text, linkText, link ) {
 		humblePressPrivate.removeFormAndNotice();
 		var body = document.querySelector( 'body' );
 		if ( ! body ) {
 			console.error( 'HumblePress error: could not find page body' );
 			return;
 		}
-		var noticeArea = humblePressPrivate.createNotice( text, link );
+		var noticeArea = humblePressPrivate.createNotice( text, linkText, link );
 		body.insertBefore( noticeArea, body.firstChild );
 	},
 
@@ -150,6 +150,10 @@ var humblePressLoader = {
 		button.addEventListener( 'click', function() {
 			humblePressLoader.toggleForm();
 		} );
+
+		if ( wordPress.fetchUserNameFromAPI && window.humblePressBootstrap && window.humblePressBootstrap.apiUrl ) {
+			wordPress.fetchUserNameFromAPI();
+		}
 	},
 
 	toggleForm: function() {
@@ -173,5 +177,7 @@ var humblePressLoader = {
 
 };
 
-// Tutorial Step 3: Uncomment to use Browserify to export these functions
-//module.exports = humblePressLoader;
+// Use Browserify to export these functions
+if ( module ) {
+	module.exports = humblePressLoader;
+}

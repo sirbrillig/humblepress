@@ -71,7 +71,7 @@ var wordPressInterface = {
 	getApiData: function() {
 		// If we used OAuth here, we could avoid needing the bootstrapped data entirely.
 		if ( ! window.humblePressBootstrap.apiUrl || ! window.humblePressBootstrap.nonce ) {
-			console.error( 'HumblePress error: could not get required API data' );
+			console.error( 'HumblePress error: could not get required API data. Is the WP-API plugin installed?' );
 			return {};
 		}
 		return {
