@@ -13,12 +13,12 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 // Start the plugin!
 // This line hooks our plugin's initialization onto the `wp_enqueue_scripts` action hook.
 // Tutorial Step 2: Uncomment to enqueue the JavaScript
-add_action( 'wp_enqueue_scripts', array( 'HumblePress', 'init' ) );
+// add_action( 'wp_enqueue_scripts', array( 'HumblePress', 'init' ) );
 
 
 // Set up AJAX new post action
 // Tutorial Step 5: Uncomment to handle AJAX posts
-add_action( 'wp_ajax_new_humblepress_post', array( 'HumblePress', 'ajax_handle_new_post' ) );
+// add_action( 'wp_ajax_new_humblepress_post', array( 'HumblePress', 'ajax_handle_new_post' ) );
 
 
 class HumblePress {
@@ -28,10 +28,10 @@ class HumblePress {
 		if ( current_user_can( 'publish_posts' ) ) {
 
 			// Tutorial Step 3: Comment this to use only the "compiled" file.
-			// self::enqueue_javascript();
+			self::enqueue_javascript();
 
 			// Tutorial Step 3: Uncomment to enqueue the single "compiled" JavaScript file
-			wp_enqueue_script( 'humblepress', plugins_url( 'js/humblepress.js', __FILE__ ), array(), true );
+			// wp_enqueue_script( 'humblepress', plugins_url( 'js/humblepress.js', __FILE__ ), array(), true );
 
 			// Bootstrap data for the JavaScript
 			// Tutorial Step 4: Uncomment to bootstrap data for the JavaScript

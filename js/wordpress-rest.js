@@ -13,7 +13,7 @@ var wordPressInterface = {
 	makeNewPost: function( postContents, callback ) {
 		var connectionData = wordPressInterface.getConnectionData();
 		if ( ! connectionData || ! connectionData.apiUrl ) {
-			errorLib.error( 'HumblePress error: could not get API url' );
+			errorLib.error( 'HumblePress error: could not get API url. Are you sure the WP-API plugin is installed?' );
 			return;
 		}
 		if ( ! connectionData.nonce ) {

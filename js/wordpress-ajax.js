@@ -8,7 +8,7 @@ if ( require ) {
 var wordPressInterface = {
 	makeNewPost: function( postContents, callback ) {
 		if ( ! window.humblePressBootstrap || ! window.humblePressBootstrap.ajaxUrl ) {
-			errorLib.error( 'HumblePress error: could not get ajax url' );
+			errorLib.error( 'HumblePress error: could not get bootstrapped ajax url. You might need to keep following the tutorial!' );
 			return;
 		}
 
