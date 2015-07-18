@@ -2,7 +2,11 @@
 
 A WordPress plugin for making really simple posts.
 
-This plugin adds a button to the logged-in admin bar which activates a small new post form right on whatever page you're currently viewing. The form has no formatting options, allows no HTML or JavaScript, and has no title. It's just a very quick way to make a new post.
+Shortcut to this repository: [http://bit.ly/humblepress](http://bit.ly/humblepress)
+
+JavaScript is a popular language at the moment, and it has changed the way we use the web. WordPress is one of the most popular ways to create content for the web, but it is written in PHP. Whether you're not a fan of writing PHP code or if you just want to do some really cool things with client-side programming, it's useful to be able to know how to write JavaScript in a WordPress plugin.
+
+This simple plugin adds a button to the logged-in admin bar which activates a small "New Post" form right on whatever page you're currently viewing. The form has no formatting options, allows no HTML or JavaScript, and has no title. It's just a very quick way to make a new post.
 
 # This is a tutorial
 
@@ -35,7 +39,7 @@ add_action( 'wp_enqueue_scripts', array( 'HumblePress', 'init' ) );
 ...
 ```
 
-To use `wp_enqueue_script()`, you need to specify four things: a name, the path to the JavaScript file, any dependencies you'll need, and a true/false value for whether to print the script on the top or the bottom of the page. Unless you have a very compelling reason to enqueue at the top of the page, good practice is to always use `true` here.
+To use `wp_enqueue_script()`, you need to specify four things: a name, the path to the JavaScript file, any dependencies you'll need, and a true/false value for whether to print the script on the bottom or the top of the page, respectively. Unless you have a very compelling reason to enqueue at the top of the page, good practice is to always use `true` here.
 
 If you look further down in the PHP file, you'll see the code that enqueues our JavaScript.
 
@@ -79,12 +83,13 @@ Enqueueing each JavaScript file we need can be pretty time-consuming, especially
 
 Instead, we can have a program automatically mash up all of our files into one file and then just enqueue that. That program is called a "build tool" and we're going to use one called [Browserify](http://browserify.org/).
 
-Browserify also implements the [CommonJS Module Pattern](http://addyosmani.com/resources/essentialjsdesignpatterns/book/#detailcommonjs) for each of your JavaScript files, so we're going to use the `require` function to join our files together, keeping everything out of the global namespace.
+Browserify also implements the [CommonJS Module Pattern](http://addyosmani.com/resources/essentialjsdesignpatterns/book/#detailcommonjs) for each of your JavaScript files, so we're going to use the `require` function to join our files together, keeping everything out of the global namespace. It also prevents having to untangle our dependencies because each file is just included in our JavaScript whenever we need it.
 
 **main.js:**
 
 ```javascript
 ...
+// Use Browserify to import the loader as a module.
 loader = require( './loader' );
 ...
 ```
@@ -99,20 +104,20 @@ Running Browserify on your files and watching for changes... (Press CTRL-C to st
 10931 bytes written to js/humblepress.js (0.09 seconds)
 ```
 
-I know, that's a lot of tools, but this will all be worth it as we go. For your own projects, feel free to use as many or as few of these tools as you like. There's a lot of things to choose from.
+For your own projects, feel free to use as many or as few build tools as you like. There's a lot of things to choose from.
 
 Browserify is going to create a single file, `humblepress.js`, which includes all the JavaScript files in our `js` folder. Now we can just enqueue that one file in our PHP code and...
 
 **humblepress.php:**
 
 ```php
-			...
-			// Tutorial Step 3: Comment this to use only the "compiled" file.
-			// self::enqueue_javascript();
+	...
+	// Tutorial Step 3: Comment this to use only the "compiled" file.
+	// self::enqueue_javascript();
 
-			// Tutorial Step 3: Uncomment to enqueue the single "compiled" JavaScript file
-			wp_enqueue_script( 'humblepress', plugins_url( 'js/humblepress.js', __FILE__ ), array(), true );
-			...
+	// Tutorial Step 3: Uncomment to enqueue the single "compiled" JavaScript file
+	wp_enqueue_script( 'humblepress', plugins_url( 'js/humblepress.js', __FILE__ ), array(), true );
+	...
 ```
 
 Our plugin loads a teeny-tiny bit faster! For a project with hundreds of JavaScript files, this difference could be significant.
@@ -167,7 +172,7 @@ We can access that data directly from our JavaScript. The code is already set up
 
 # Step 5: AJAX
 
-Of course, our form doesn't actually do anything yet. When you press the "post" button, we need to submit the form data back to WordPress. We'll do this using the function `XMLHttpRequest` (aka: "AJAX") to a special file included in WordPress called `admin-ajax.php`.
+Of course, our form doesn't actually do anything yet. When you press the "post" button, we need to submit the form data back to WordPress. We'll do this using the function `XMLHttpRequest` to send data to a special file included in WordPress called `admin-ajax.php`.
 
 When you send a request to `admin-ajax.php`, you specify an `action` to run. Back in our PHP we can create a function to handle that action, in this case making a new post. The actual post creation is done with the internal WordPress function `wp_insert_post` as you can see from the code.
 
