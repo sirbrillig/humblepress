@@ -1,4 +1,11 @@
+.wp-admin-bar-humblepress .ab-item::before {
+  content: '\f132';
+  font-family: 'dashicons';
+  margin-top: 4px;
+}
+
 #humblepress-notice,
+#humblepress-error-notice,
 #humblepress-form {
   z-index: 10000;
   width: 100%;
@@ -7,8 +14,27 @@
   background-color: #e2e2e2;
 }
 
+#humblepress-error-notice,
 #humblepress-notice {
-  background-color: #fcff98;
+  background-color: #d8d8d8;
+}
+
+#humblepress-error-notice,
+#humblepress-notice p {
+  padding: 8px;
+}
+
+#humblepress-notice a {
+  display: block;
+  color: #009B08;
+}
+
+#humblepress-notice a::before {
+  content: '\f177';
+  font-family: 'dashicons';
+  padding-right: 6px;
+  color: #000;
+  float: left;
 }
 
 #humblepress-form p,
@@ -21,6 +47,7 @@
   background-color: #fff;
 }
 
+#humblepress-error-notice button,
 #humblepress-notice button,
 #humblepress-form button {
   display: inline-block;

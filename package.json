@@ -10,7 +10,8 @@
   "license": "GPL-v2",
   "homepage": "https://github.com/sirbrillig/humblepress",
   "devDependencies": {
-    "browserify": "^11.0.0"
+    "browserify": "^11.0.0",
+    "watchify": "^3.3.0"
   },
   "dependencies": {}
 }

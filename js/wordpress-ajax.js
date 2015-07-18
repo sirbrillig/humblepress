@@ -1,7 +1,14 @@
+var errorLib = window.humblePressErrors;
+
+// Use Browserify to import the error lib as a module.
+if ( typeof module !== 'undefined' ) {
+	errorLib = require( './errors' );
+}
+
 var wordPressInterface = {
 	makeNewPost: function( postContents, callback ) {
 		if ( ! window.humblePressBootstrap || ! window.humblePressBootstrap.ajaxUrl ) {
-			console.error( 'HumblePress error: could not get ajax url' );
+			errorLib.error( 'HumblePress error: could not get bootstrapped ajax url. You might need to keep following the tutorial!' );
 			return;
 		}
 
@@ -19,11 +26,11 @@ var wordPressInterface = {
 			if ( request.status >= 200 && request.status < 400 ) {
 				callback( request.responseText );
 			} else {
-				console.error( 'HumblePress error: ajax request failed', request );
+				errorLib.error( 'HumblePress error: ajax request failed', request );
 			}
 		};
 		request.onerror = function() {
-			console.error( 'HumblePress error: ajax request encountered an error', request );
+			errorLib.error( 'HumblePress error: ajax request encountered an error', request );
 		};
 		request.open( 'POST', window.humblePressBootstrap.ajaxUrl, true );
 		request.send( encodedAjaxData );
@@ -37,5 +44,7 @@ var wordPressInterface = {
 	}
 };
 
-// Tutorial Step 3: Uncomment to use Browserify to export these functions
-//module.exports = wordPressInterface;
+// Use Browserify to export these functions
+if ( typeof module !== 'undefined' ) {
+	module.exports = wordPressInterface;
+}
