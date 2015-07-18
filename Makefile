@@ -17,7 +17,7 @@ compile:
 
 watchify:
 	@echo "Running Browserify on your files and watching for changes... (Press CTRL-C to stop)"
-	$(WATCHIFY) --verbose -o js/humblepress.js -- js/main.js
+	@$(WATCHIFY) --verbose -o js/humblepress.js -- js/main.js
 
 run: npm install watchify
 
