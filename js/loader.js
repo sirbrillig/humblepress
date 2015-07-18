@@ -96,7 +96,7 @@ var humblePressPrivate = {
 	notifyPostComplete: function( response ) {
 		var responseData = JSON.parse( response );
 		if ( ! responseData.success && ! responseData.ID ) {
-			errorLib.error( 'HumblePress error: something went wrong with making the post' );
+			errorLib.error( 'HumblePress error: something went wrong with making the post. Maybe you need to keep following the tutorial!' );
 			return;
 		}
 		var notice = 'HumblePress made a new post for you!';
