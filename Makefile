@@ -2,6 +2,10 @@ WATCHIFY = ./node_modules/.bin/watchify
 BROWSERIFY = ./node_modules/.bin/browserify
 NPM = npm
 
+run: npm install watchify
+
+build: npm install compile
+
 npm:
 	@echo "Checking for npm..."
 	@command -v npm >/dev/null 2>&1 || { echo >&2 "Please install Node.js: https://nodejs.org/"; exit 1;  }
@@ -19,7 +23,4 @@ watchify:
 	@echo "Running Browserify on your files and watching for changes... (Press CTRL-C to stop)"
 	@$(WATCHIFY) --verbose -o js/humblepress.js -- js/main.js
 
-run: npm install watchify
-
-build: npm install compile
-
+.PHONY: build run watchify compile install npm
